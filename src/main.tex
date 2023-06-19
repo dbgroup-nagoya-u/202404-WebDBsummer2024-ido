@@ -1,23 +1,30 @@
-%--- set a given class file if exist ---%
 \documentclass[
-  a4paper,
-  notitlepage,
-  ja=standard,
-  autodetect-engine,
-  dvi=dvipdfmx,
-]{bxjsarticle}
-%---------------------------------------%
+  % english, % writing in English
+  lualatex, % using lualatex for building
+  % platex, % building a PDF via a DVI file
+  % dvi=dvipdfmx, % building a PDF via a DVI file
+]{ipsj-nc}
 
 \usepackage{my_packages}
 \usepackage{my_command_definitions}
 
-%--- modify the following lines according to a given class ---%
-\title{サンプルファイル}
-\author{山田 太郎}
+\title[タイトル]{Title in English}
+
+\author[著者1]{First Author}{Label1}
+\author[著者2]{Second Author}{Label1,Label2}
+
+\affiliation
+  [所属1]
+  {First Affiliation}
+  {Label1}
+\affiliation
+  [所属2]
+  {Second Affiliation}
+  {Label2}
 
 \begin{document}
+
 \maketitle
-%-------------------------------------------------------------%
 
 \input{contents.tex}
 

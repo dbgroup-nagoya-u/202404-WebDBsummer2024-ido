@@ -1,0 +1,74 @@
+{
+  // enable formating
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+  "editor.formatOnType": false,
+  // ignore intermedate files
+  "files.exclude": {
+    "**/*.aux": true,
+    "**/*.dvi": true,
+    "**/*.synctex.gz": true,
+    "**/*.synctex(busy)": true,
+    "**/*.log": true,
+    "**/*.bbl": true,
+    "**/*.blg": true,
+    "**/*.bcf": true,
+    "**/*.xml": true,
+    "**/*.fls": true,
+    "**/*.lof": true,
+    "**/*.lot": true,
+    "**/*.loa": true,
+    "**/*.toc": true,
+    "**/*.fdb_latexmk": true,
+    "**/node_modules": true,
+  },
+  // settings for LaTeX Workshop
+  "latex-workshop.latex.outDir": "%WORKSPACE_FOLDER%",
+  "latex-workshop.latex.recipes": [
+    {
+      "name": "Full Build",
+      "tools": [
+        "latexmk",
+      ]
+    },
+  ],
+  "latex-workshop.latex.tools": [
+    {
+      "name": "latexmk",
+      "command": "latexmk",
+      "args": [
+        "-pdflua",
+        "-jobname=paper",
+        "-output-directory=%OUTDIR%",
+        "%DOC%"
+      ],
+    },
+  ],
+  "latex-workshop.latex.autoBuild.run": "onSave",
+  "latex-workshop.latex.autoClean.run": "onFailed",
+  "latex-workshop.synctex.afterBuild.enabled": false,
+  "textlint.run": "onSave",
+  "textlint.nodePath": ".linter/node_modules",
+  "textlint.configPath": ".linter/lintrules/textlint/textlint.json",
+  "cSpell.words": [
+    "algorithmicx",
+    "biber",
+    "Broy",
+    "bxjsarticle",
+    "Codd",
+    "Creight",
+    "deim",
+    "dvipdfmx",
+    "inbook",
+    "IPSJ",
+    "lualatex",
+    "pbibtex",
+    "platex",
+    "uplatex"
+  ],
+  // unify indentation
+  "[markdown]": {
+    "editor.tabSize": 4,
+    "files.trimTrailingWhitespace": false,
+  },
+}

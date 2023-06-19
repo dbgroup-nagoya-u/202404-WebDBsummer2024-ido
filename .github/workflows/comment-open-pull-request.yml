@@ -1,0 +1,36 @@
+name: Comment for Opened Pull Request
+
+on:
+  pull_request:
+    types: [opened]
+
+jobs:
+  comment:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Submit a POST Request to the GitHub API
+        run: |
+          comment=$(cat .github/workflows/bot_comment.md)
+          comment="${comment//\\/\\\\}"
+          comment="${comment//$'\n'/'\n'}"
+          curl -X POST \
+               -H "Content-Type: application/json" \
+               -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+               -d "{ \"body\": \"${comment}\" }" \
+               https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments
+  checklist:
+    needs: comment
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Submit a POST Request to the GitHub API
+        run: |
+          checklist=$(cat .github/workflows/checklist.md)
+          checklist="${checklist//\\/\\\\}"
+          checklist="${checklist//$'\n'/'\n'}"
+          curl -X POST \
+               -H "Content-Type: application/json" \
+               -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+               -d "{ \"body\": \"${checklist}\" }" \
+               https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments

@@ -1,0 +1,113 @@
+name: Linter
+on: [pull_request]
+
+jobs:
+  # textlint:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #       with:
+  #         submodules: recursive
+
+  #     - uses: actions/setup-node@v1
+  #       with:
+  #         node-version: '16'
+
+  #     - uses: reviewdog/action-setup@v1
+
+  #     - name: Install textlint and packages
+  #       shell: bash
+  #       working-directory: ${{github.workspace}}/.linter
+  #       run: |
+  #         npm install
+
+  #     - name: Run textlint with reviewdog
+  #       shell: bash
+  #       working-directory: ${{github.workspace}}
+  #       env:
+  #         REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #       run: |
+  #         for file in $(find src/ -iname '*.txt' -o -iname '*.tex');
+  #         do
+  #           echo "filename := ${file}"
+  #           .linter/node_modules/.bin/textlint --config .linter/lintrules/textlint/textlint.json -f checkstyle ${file} \
+  #             | reviewdog -f=checkstyle -name="textlint" -reporter=github-pr-review
+  #         done
+
+
+
+  latexlint:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.9]
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Pip install regex
+        shell: bash
+        run: |
+          pip install regex
+
+      - name: Install draftcheck
+        shell: bash
+        working-directory: ${{github.workspace}}/.linter
+        run: |
+          git clone https://github.com/dvolgyes/draftcheck
+          # Replace rules.py and script.py
+          cp lintrules/draftcheck/rules.py draftcheck/draftcheck/rules.py
+          cp lintrules/draftcheck/script.py draftcheck/draftcheck/script.py
+          cd draftcheck
+          python setup.py install
+
+      - name: INFO draftcheck
+        shell: bash
+        working-directory: ${{github.workspace}}
+        run: |
+          for file in $(find src/ -iname '*.tex');
+          do
+            draftcheck ${file} >> output.txt || true
+          done
+          cat output.txt
+
+      - uses: reviewdog/action-setup@v1
+
+      - name: Run draftcheck with reviewdog
+        shell: bash
+        working-directory: ${{github.workspace}}
+        env:
+          REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          for file in $(find src/ -iname '*.tex');
+          do
+            echo "filename := ${file}"
+            draftcheck ${file} \
+              | reviewdog -efm="%f:%l:%c: %m" -name="latexlint by draftcheck" -reporter=github-pr-review
+          done
+
+
+
+  bibtexlint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - uses: reviewdog/action-setup@v1
+
+      - name: Run bibtexlint with reviewdog
+        shell: bash
+        working-directory: ${{github.workspace}}
+        env:
+          REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          bash .linter/lintrules/bibtex/check.sh \
+            | reviewdog -efm="%f:%l %m" -name="bibtexlint" -reporter=github-pr-review

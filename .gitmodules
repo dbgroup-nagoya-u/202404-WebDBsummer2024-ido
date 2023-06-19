@@ -1,0 +1,4 @@
+[submodule ".vscode/linter"]
+	path = .linter
+	url = https://github.com/dbgroup-nagoya-u/paper-lintrules.git
+	branch = main

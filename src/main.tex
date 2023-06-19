@@ -1,0 +1,27 @@
+%--- set a given class file if exist ---%
+\documentclass[
+  a4paper,
+  notitlepage,
+  ja=standard,
+  autodetect-engine,
+  dvi=dvipdfmx,
+]{bxjsarticle}
+%---------------------------------------%
+
+\usepackage{my_packages}
+\usepackage{my_command_definitions}
+
+%--- modify the following lines according to a given class ---%
+\title{サンプルファイル}
+\author{山田 太郎}
+
+\begin{document}
+\maketitle
+%-------------------------------------------------------------%
+
+\input{contents.tex}
+
+\bibliographystyle{ieeetr}
+\bibliography{reference}
+
+\end{document}

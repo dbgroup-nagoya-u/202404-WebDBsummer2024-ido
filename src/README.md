@@ -1,6 +1,5 @@
 # Source Files for the Paper
 
-- `ipsj-nc`: a LaTeX class file for the national convention of IPSJ.
 - `main.tex`: a root TeX file.
 - `*.tex`: source TeX files loaded by the root.
 - `my_packages.sty`: a list of packages used in the writing.

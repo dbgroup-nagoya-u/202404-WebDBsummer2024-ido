@@ -37,14 +37,14 @@
       "name": "latexmk",
       "command": "latexmk",
       "args": [
-        "-pdflua",
+        "-pdfdvi",
         "-jobname=paper",
         "-output-directory=%OUTDIR%",
         "%DOC%"
       ],
     },
   ],
-  "latex-workshop.latex.autoBuild.run": "onSave",
+  "latex-workshop.latex.autoBuild.run": "never",
   "latex-workshop.latex.autoClean.run": "onFailed",
   "latex-workshop.synctex.afterBuild.enabled": false,
   "textlint.run": "onSave",
@@ -66,9 +66,4 @@
     "platex",
     "uplatex"
   ],
-  // unify indentation
-  "[markdown]": {
-    "editor.tabSize": 4,
-    "files.trimTrailingWhitespace": false,
-  },
 }

@@ -1,34 +1,41 @@
+%--- set a given class file if exist ---%
 \documentclass[
-  % english, % writing in English
-  lualatex, % using lualatex for building
-  % platex, % building a PDF via a DVI file
-  % dvi=dvipdfmx, % building a PDF via a DVI file
-]{ipsj-nc}
+  submit,
+  techrep,
+  noauthor,
+  a4paper,
+  notitlepage,
+  ja=standard,
+  autodetect-engine,
+  dvi=dvipdfmx
+]{ipsj}
+%---------------------------------------%
 
 \usepackage{my_packages}
 \usepackage{my_command_definitions}
 
-\title[タイトル]{Title in English}
-
-\author[著者1]{First Author}{Label1}
-\author[著者2]{Second Author}{Label1,Label2}
-
-\affiliation
-  [所属1]
-  {First Affiliation}
-  {Label1}
-\affiliation
-  [所属2]
-  {Second Affiliation}
-  {Label2}
-
+%--- modify the following lines according to a given class ---%
 \begin{document}
+\title{タイトル}
+
+\affiliate{NU}{名古屋大学大学院情報学研究科\\
+  Graduate School of Informatics, Nagoya University}
+
+\author{平野~匠真}{Hirano Shouma}{NU}[hirano@db.is.i.nagoya-u.ac.jp]
+\author{杉浦~健人}{Sugiura Kento}{NU}[sugiura@i.nagoya-u.ac.jp]
+\author{石川~佳治}{Ishikawa Yoshiharu}{NU}[ishikawa@i.nagoya-u.ac.jp]
+
+\begin{abstract}
+  概要．
+\end{abstract}
 
 \maketitle
+%-------------------------------------------------------------%
 
 \input{contents.tex}
 
-\bibliographystyle{ieeetr}
+\bibliographystyle{ipsjsort}
 \bibliography{reference}
+
 
 \end{document}

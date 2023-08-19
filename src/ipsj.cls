@@ -3045,7 +3045,6 @@
       {\hskip1zw}%
     \else
       {\textbf{概要}：}
-
     \fi
   }
 

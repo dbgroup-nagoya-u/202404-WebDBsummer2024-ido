@@ -14,9 +14,8 @@
 \usepackage{my_packages}
 \usepackage{my_command_definitions}
 
-%--- modify the following lines according to a given class ---%
 \begin{document}
-\title{タイトル}
+\title{同時実行\Bptree{}におけるロックフリー手続きの改善と実装}
 
 \affiliate{NU}{名古屋大学大学院情報学研究科\\
   Graduate School of Informatics, Nagoya University}
@@ -24,15 +23,23 @@
 \author{平野~匠真}{Hirano Shouma}{NU}[hirano@db.is.i.nagoya-u.ac.jp]
 \author{杉浦~健人}{Sugiura Kento}{NU}[sugiura@i.nagoya-u.ac.jp]
 \author{石川~佳治}{Ishikawa Yoshiharu}{NU}[ishikawa@i.nagoya-u.ac.jp]
+\author{陸~可鏡}{Lu Kejing}{NU}[lu@db.is.i.nagoya-u.ac.jp]
 
 \begin{abstract}
-  概要．
+  単一コアの性能向上が限界を迎え，複数コアを活用するマルチスレッド処理が主流となってきている．
+  索引技術においてもその傾向は同様であり，CPUのメニーコア化に伴い，マルチスレッド処理を意識した索引構造が多く提案されている．
+  マルチスレッド処理におけるロックを用いた同時実行制御は，スケーラビリティが悪いため，\Bptree{}を基にしたBw木やBz木といったロックフリー索引に対して注目が集まっている．
+  しかし，これらの索引はマルチスレッド環境下では性能が向上せず，ロックフリー索引には更なる改善が必要であると考えられる．
+  そこで，本研究では\Bptree{}をロックフリー化させた新たな索引構造である\Bctree{}を提案し，その構造および操作について述べる．
 \end{abstract}
 
 \maketitle
-%-------------------------------------------------------------%
 
 \input{contents.tex}
+
+\begin{acknowledgment}
+  本研究はJSPS科研費JP20K19804，JP21H03555，JP22H03594，JP22H03903の助成，および国立研究開発法人新エネルギー・産業技術総合開発機構（NEDO）の委託業務（JPNP16007）の結果得られたものである．
+\end{acknowledgment}
 
 \bibliographystyle{ipsjsort}
 \bibliography{reference}

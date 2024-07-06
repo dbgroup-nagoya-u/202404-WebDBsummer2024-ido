@@ -15,22 +15,21 @@
 \usepackage{my_command_definitions}
 
 \begin{document}
-\title{同時実行\Bptree{}におけるロックフリー手続きの改善と実装}
+\title{ロックフリー索引のトライ木化による高速化に関する研究}
 
 \affiliate{NU}{名古屋大学大学院情報学研究科\\
   Graduate School of Informatics, Nagoya University}
 
-\author{平野~匠真}{Hirano Shouma}{NU}[hirano@db.is.i.nagoya-u.ac.jp]
+\author{井戸~佑}{Ido Yu}{NU}[ido@db.is.i.nagoya-u.ac.jp]
 \author{杉浦~健人}{Sugiura Kento}{NU}[sugiura@i.nagoya-u.ac.jp]
 \author{石川~佳治}{Ishikawa Yoshiharu}{NU}[ishikawa@i.nagoya-u.ac.jp]
 \author{陸~可鏡}{Lu Kejing}{NU}[lu@db.is.i.nagoya-u.ac.jp]
 
 \begin{abstract}
-  単一コアの性能向上が限界を迎え，複数コアを活用するマルチスレッド処理が主流となってきている．
-  索引技術においてもその傾向は同様であり，CPUのメニーコア化に伴い，マルチスレッド処理を意識した索引構造が多く提案されている．
-  マルチスレッド処理におけるロックを用いた同時実行制御は，スケーラビリティが悪いため，\Bptree{}を基にしたBw木やBz木といったロックフリー索引に対して注目が集まっている．
-  しかし，これらの索引はマルチスレッド環境下では性能が向上せず，ロックフリー索引には更なる改善が必要であると考えられる．
-  そこで，本研究では\Bptree{}をロックフリー化させた新たな索引構造である\Bctree{}を提案し，その構造および操作について述べる．
+  代表的な索引構造であるB+木は様々なデータを格納可能な汎用性の高い索引である．
+  一方で，扱うキーに制限を加え，索引構造を最適化させることで性能を向上させる研究も行われてきた．
+  本研究では，著者らの研究室で開発しているロックフリーB+木に対し同様の拡張および性能改善を行う．
+  具体的には，扱うキーをバイナリ比較可能なものに制限することでトライ木の構造を適用し，空間利用効率の向上およびそれに伴う検索性能の向上を図る．
 \end{abstract}
 
 \maketitle

@@ -6,6 +6,7 @@ on:
 
 jobs:
   comment:
+    if: github.event.pull_request.draft
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -13,6 +14,7 @@ jobs:
         run: |
           comment=$(cat .github/workflows/bot_comment.md)
           comment="${comment//\\/\\\\}"
+          comment="${comment//\"/\\\"}"
           comment="${comment//$'\n'/'\n'}"
           curl -X POST \
                -H "Content-Type: application/json" \
@@ -20,6 +22,7 @@ jobs:
                -d "{ \"body\": \"${comment}\" }" \
                https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments
   checklist:
+    if: github.event.pull_request.draft
     needs: comment
     runs-on: ubuntu-latest
     steps:
@@ -28,6 +31,7 @@ jobs:
         run: |
           checklist=$(cat .github/workflows/checklist.md)
           checklist="${checklist//\\/\\\\}"
+          checklist="${checklist//\"/\\\"}"
           checklist="${checklist//$'\n'/'\n'}"
           curl -X POST \
                -H "Content-Type: application/json" \

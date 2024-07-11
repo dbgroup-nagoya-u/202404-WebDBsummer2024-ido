@@ -12,19 +12,38 @@
 \label{sec:bc_forest_structure}
 
 \Bcforest{}は\Bctree{}を基本単位とする階層を持つ索引構造である．
-\Bcforest{}の概形をに示す．
-\Sec{\ref{sec:bc_forest_structure}}では\Bctree{}との差異である，posting listの導入とトライ木構造の適応について説明する．
+\Bcforest{}の概形を　　に示す．
+\Sec{\ref{sec:bc_forest_structure}}では\Bctree{}との差異である，トライ木構造の適応とposting listの導入について説明する．
+
+\subsection{トライ木構造の適応}
+
+Mass木は\Bptree{}にトライ木構造を適応させることで，キャッシュ効率を改善させた．
+\Bcforest{}では\Bctree{}に対し，同様の改善を図る．
+
+Mass木の観点では\Bptree{}から\Bctree{}になることにより，ロックフリーによる書き込み性能の改善を図る．
+また\Bctree{}の観点では，整数型や文字列型などのバイナリ比較可能なキーに対し，キャッシュ効率の改善を図る．
 
 \subsection{posting listの導入}
 
-Mass木において，
+Mass木においては，空間利用効率が問題となる．
+・　　は末尾3~byteが異なる19~byteの2~キーを格納したMass木の索引構造である．
+先頭8~文字が共通するため，layer1を作成する．
+同様に8～16~byte目が共通するため，layer2を作成する．
+Mass木では本来，1~つのノードに最大16~個のレコードを格納することが出来る．
+しかしlayer1では，1~つのレコードしか格納されていない状態でlayer2を作成している．
+layer1にのみ注目すると，空間利用率は約6.25~\%しかない．
 
-\subsection{トライ木構造の適応}
+\Bcforest{}では空間利用率の改善として，posting listを導入する．
+posting listでは，1~つのキーに対して複数のペイロードを対応付けることが出来る．
+・　　はposting listを導入した際の索引構造を示したものである．
+layer1においてposting list作成することで，layer2の無駄な階層化と空間利用率の悪化を防ぐ．
+
 
 \section{\Bcforest{}のノード操作}
 \label{sec:node_operation}
 
 \subsection{書き込み}
+
 \subsection{読み取り}
 
 \section{\Bcforest{}の構造変更操作}
